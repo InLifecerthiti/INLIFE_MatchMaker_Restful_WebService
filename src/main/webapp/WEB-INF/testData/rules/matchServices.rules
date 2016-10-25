@@ -1,0 +1,233 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix u: <http://www.AccessibleOntology.com/GenericOntology.owl#>
+@prefix p: <http://inlife.ServiceOntology#>
+
+//create the initial set of services according to the user status
+[MappingAtActivityLevel:
+
+   //map user status with the corresponding ontology status
+   (?if rdf:type p:InferredConfiguration)
+   (?if p:userName ?userEmail)
+   (?subProfile rdf:type u:AssistedPersonSubProfile)
+   (?subProfile u:hasUsername ?email)
+    equal(?userEmail, ?email)
+	(?subProfile u:user_activity_status ?statusA)
+  
+   (?statusB rdf:type p:Status)
+   (?statusB p:hasID ?status_idB)
+   equal(?statusA,?status_idB)
+
+   //map activity to get the services
+   (?activityA rdf:type p:UserActivity)
+   (?statusB p:statusIsMappedWith ?activityA)
+   (?activityB rdf:type p:UserActivity)
+   equal(?activityA,?activityB)
+ 
+   (?activityB p:activityIsMappedWith ?service)
+  (?service rdf:type p:ServiceModel)
+  (?service p:serviceHasName ?serviceName)
+  (?service p:hasPriority ?prio)
+
+
+  //find the details of the service
+  makeSkolem(?newConfig, ?statusA, ?if)
+  makeSkolem(?serviceSetting,?service)
+->
+  print('****************STATUS matching  found***************'+ ?statusA)
+  print('*********** SERVICE found **************'+ ?service)
+  (?if p:refersTo ?newConfig)
+  (?newConfig rdf:type p:Configuration)
+  (?newConfig p:refersToStatus ?statusA)
+  (?newConfig p:hasService ?serviceSetting)
+  (?serviceSetting rdf:type p:ServiceSetting)
+  (?serviceSetting p:hasName ?serviceName)
+  (?serviceSetting p:hasPrio ?prio)
+
+]
+
+//add default parameters to the initial set of services
+[AddDefaultParameters: 
+
+	(?config rdf:type p:Configuration)
+	(?config p:hasService ?serviceSettingA)
+	(?serviceSettingA p:hasName ?serviceNameA)
+	
+	(?serviceB rdf:type p:ServiceModel)
+	(?serviceB p:serviceHasName ?serviceNameB)
+	 equal(?serviceNameA,?serviceNameB)
+	 
+	(?serviceB p:hasInput ?input)
+	(?input rdf:type p:Parameter)
+	(?input p:parameterHasName ?iname)
+	//(?input p:parameterHasType ?itype)
+	
+	makeSkolem(?newInput, ?serviceSettingA,?input)
+
+	->
+	
+	(?serviceSettingA p:serviceInput ?newInput)
+	(?newInput p:type "input")
+	(?newInput p:name ?iname)
+	
+	print("************ create reference to input parameter  ************")
+	
+] 
+
+//check if the user properties can be used as input parameters for the services
+//mapping at service parameter level
+[MappingAtServiceParameterLevel:
+   (?if rdf:type p:InferredConfiguration)
+   (?if p:hasProperty ?prop)
+   (?prop rdf:type p:Property)
+   (?prop p:isMappedTo ?termNameA)
+   (?prop p:hasValue ?value)
+   
+   (?if p:refersTo ?config)
+   (?config rdf:type p:Configuration)
+   (?config p:hasService ?serviceSettingA)
+   (?serviceSettingA p:hasName ?serviceNameA)
+   (?serviceSettingA p:serviceInput ?inputA)
+   (?inputA p:name ?nameA)
+   
+    (?serviceB rdf:type p:ServiceModel)
+	(?serviceB p:serviceHasName ?serviceNameB)
+	 equal(?serviceNameA,?serviceNameB)
+	 
+	(?serviceB p:hasInput ?inputB)
+	(?inputB rdf:type p:Parameter)
+	(?inputB p:parameterHasName ?nameB)
+	equal(?nameA, ?nameB)
+	
+   (?inputB p:isMappedToParameterTerm ?termB)
+   (?termB rdf:type p:ParameterTerm)
+   (?termB p:hasName ?termNameB)
+	equal(?termNameA, ?termNameB)
+	
+   ->
+   
+   (?serviceSettingA p:isActive "true")
+   (?inputA p:hasValue ?value)
+   (?inputA p:isMappedTo ?termNameA)
+   
+   
+  print('****************PARAMETER matching  found***************')
+  print('*********** SERVICE found **************'+ ?termNameB)
+
+  ]
+ 
+  //situation where sending text Message is required
+  //in this case the result of the services that will be previously called
+  //will be used as input for the SMS
+  [SendEmergencyNotification:
+  
+   (?if rdf:type p:InferredConfiguration)
+   (?if p:hasStatus ?statusA)
+   (?statusA rdf:type p:Status)
+   (?statusA rdf:type p:Status)
+   (?statusA p:id ?status_idA)
+   (?statusB rdf:type p:Status)
+   (?statusB p:hasID ?status_idB)
+   equal(?status_idA,?status_idB)
+
+   //if the status is mapped with a message
+   //we have to activate a service that can pass the message
+  (?statusB p:statusIsMappedWith ?message)
+  (?message rdf:type ?Messages)
+  (?message p:hasName ?messageName)
+   (?if p:refersTo ?config)
+   (?config rdf:type p:Configuration)
+  
+  //find an alert service
+  (?service rdf:type p:ServiceModel)
+  (?service p:serviceHasName ?serviceName)
+  (?service p:hasPriority ?prio)
+  (?service p:hasInput ?input)
+  (?input rdf:type p:Parameter)
+  (?input p:parameterHasName ?inputName)
+  (?input p:isMappedToParameterTerm ?pterm)
+  (?pterm rdf:type p:ParameterTerm)
+  (?pterm p:hasName "message")
+  
+   makeSkolem(?serviceSetting,?service)
+->
+  print('****************ALERT-MESSAGE service matching  found***************')
+ 
+  (?config p:hasService ?serviceSetting)
+  (?serviceSetting rdf:type p:ServiceSetting)
+  (?serviceSetting p:hasName ?serviceName)
+  (?serviceSetting p:hasPrio ?prio)
+ 
+ 
+  ]
+  
+  //TODO: map output parameters with input parameters of active services
+  //in order to make a service synthesis that makes sense (use priority and mapping)
+  
+  [ServiceSynthesisGeneralRule:
+  
+  //find an active service
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:id "inlife-default")
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:hasService ?serviceSettingA)
+  (?serviceSettingA p:hasName ?serviceNameA)
+  (?serviceSettingA p:isActive "true")
+  (?serviceSettingA p:hasPrio ?pA)
+  
+  //find another active service
+  (?config rdf:type p:Configuration)
+  (?config p:hasService ?serviceSettingB)
+  (?serviceSettingB p:hasName ?serviceNameB)
+  (?serviceSettingB p:isActive "true")
+  (?serviceSettingB p:hasPrio ?pB)
+ 
+  
+  notEqual(?serviceNameA,?serviceNameB)
+  equal(?serviceNameB,"send SMS")
+  //check their priority
+  difference(?pA, ?pB, ?c)
+	equal(?c,1)
+  
+  //find the output parameters of service A
+  (?serviceC rdf:type p:ServiceModel)
+  (?serviceC p:serviceHasName ?serviceNameC)
+  equal(?serviceNameA, ?serviceNameC)
+  (?serviceC p:hasOutput ?output1)
+  (?output1 rdf:type p:Parameter)
+  (?output1 p:parameterHasName ?outputParameterName)
+  (?output1 p:isMappedToParameterTerm ?pTerm1)
+  (?pterm1 rdf:type p:ParameterTerm)
+  (?pterm1 p:hasName ?ptermName1)
+  //check the mapping of the output parameters of the serviceA
+  //with the input parameters of the serviceB
+  (?serviceSettingB p:serviceInput ?input)
+  (?input p:type "input")
+  (?input p:name ?inputName)
+  equal(?inputName, "text sms")
+   
+   
+   makeSkolem(?newMetaData,?serviceSettingB,?output1)
+	->
+//	print('********************SERVICE SYNTHESIS**********************' ?outputParameterName)
+//	print('********************SERVICE SYNTHESIS**********************')
+	(?serviceSettingB p:hasMetadata ?newMetaData)
+	(?newMetaData rdf:type p:Metadata)
+	(?newMetaData p:refersTo ?input)
+	(?newMetaData p:fromServiceName ?serviceNameA)
+	(?newMetaData p:fromVariableName ?outputParameterName)
+	(?newMetaData p:toServiceName ?serviceNameB)
+	(?newMetaData p:toVariableName ?inputName)
+   
+    
+  ]
+  
+ 
+
+
+
+
+
+
+
+

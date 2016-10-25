@@ -1,0 +1,26 @@
+# Querry all services and settings to contextualized preferences 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p: <http://inlife.ServiceOntology#>
+
+SELECT DISTINCT
+	?type
+    (str(?tool_name) as ?toolName)	
+	(str(?category_name) as ?categoryName)
+	(str(?similarity_value) as ?similarityValue)
+	(str(?taxonomy_name) as ?taxonomyName)
+	
+WHERE
+{
+	?if rdf:type p:InferredConfiguration.
+	?config rdf:type p:Configuration.
+	?config p:refersToUserTaxonomy ?taxonomy.
+	?taxonomy rdf:type p:userTaxonomySetting.
+	?taxonomy p:name ?taxonomy_name.
+	?taxonomy p:refersToCategory ?category.
+    ?category p:hasName ?category_name.
+	?category p:similarityValue ?similarity_value.
+    ?category p:hasType ?type.
+	OPTIONAL{?category p:hasTool ?tool_name}.
+	
+} ORDER BY DESC(?category_name)

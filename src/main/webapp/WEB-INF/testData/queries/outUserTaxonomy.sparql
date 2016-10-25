@@ -1,0 +1,21 @@
+# Querry all services and settings to contextualized preferences 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p: <http://inlife.ServiceOntology#>
+
+SELECT DISTINCT
+	?type
+	(str(?c) as ?configId)
+    (str(?name) as ?taxonomy_name)	
+
+	
+WHERE
+{
+	?if rdf:type p:InferredConfiguration.
+	?if p:id ?c.
+	?config rdf:type p:Configuration.
+	?config p:refersToUserTaxonomy ?userTaxonomySetting.
+	?userTaxonomySetting rdf:type ?type.
+	?userTaxonomySetting p:name ?name.
+	
+} ORDER BY DESC(?name)

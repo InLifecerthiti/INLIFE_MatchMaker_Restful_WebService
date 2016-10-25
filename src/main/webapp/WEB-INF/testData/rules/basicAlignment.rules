@@ -1,0 +1,57 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix u: <http://www.AccessibleOntology.com/GenericOntology.owl#>
+@prefix p: <http://inlife.ServiceOntology#>
+
+//for every preference set create an inferred configuration       
+[AlignNPSets_forElderly:
+	
+	(?ps rdf:type p:PreferenceSet)
+	(?ps p:userName ?userEmail)
+	(?subProfile rdf:type u:AssistedPersonSubProfile)
+    (?subProfile u:hasUsername ?username)
+     equal(?userEmail, ?username)
+	(?subProfile u:hasIMEI ?imei)
+	makeSkolem(?prop, ?ps,?a)
+	 
+	-> 
+	(?ps rdf:type p:InferredConfiguration)
+	(?ps p:hasProperty ?prop)
+	(?prop rdf:type p:Property)
+	(?prop p:hasValue ?imei)
+	(?prop p:isMappedTo "IMEI")
+	
+	
+	print('***************** Inferred Configuration created ***************')
+]
+     
+[AlignNPSets_forCaregivers:
+	
+	(?ps rdf:type p:PreferenceSet)
+	(?ps p:userName ?userEmail)
+	(?subProfile rdf:type u:CaregiverSubProfile)
+    (?subProfile u:hasUsername ?email)
+     equal(?userEmail, ?email)
+	 
+	-> 
+	(?ps rdf:type p:InferredConfiguration)
+	(?ps p:hasRole "Caregiver")
+	print('***************** Inferred Configuration created ***************')
+]
+
+[AlignNPSets_forProviders:
+	
+	(?ps rdf:type p:PreferenceSet)
+	(?ps p:userName ?userEmail)
+	(?subProfile rdf:type u:ProviderSubProfile)
+    (?subProfile u:hasUsername ?email)
+     equal(?userEmail, ?email)
+	 
+	-> 
+	(?ps rdf:type p:InferredConfiguration)
+	(?ps p:hasRole "Provider")
+	print('***************** Inferred Configuration created ***************')
+]
+
+
+
+

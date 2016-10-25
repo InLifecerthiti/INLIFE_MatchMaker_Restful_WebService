@@ -1,0 +1,25 @@
+# Querry all applications and settings to contextualized preferences 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p: <http://inlife.ServiceOntology#>
+
+SELECT DISTINCT
+	?type 
+	(str(?c) as ?contextID)
+	(str(?an) as ?appID)
+	(str(?t) as ?setType)
+	#(str(?sv) as ?setValue)
+	(str(?sn) as ?setName)
+WHERE
+{
+	?if rdf:type p:InferredConfiguration.
+	?if p:id ?c.
+	?if p:refersTo ?app.
+	?app rdf:type ?type.
+	?app p:id ?an.
+	#?app p:isActive ?aa.
+	?app p:serviceSetting ?set.
+	?set p:type ?t.
+	#?set p:value ?sv.
+	?set p:name ?sn.
+} ORDER BY DESC(?c)

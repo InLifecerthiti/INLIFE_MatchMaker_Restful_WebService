@@ -1,0 +1,21 @@
+{
+  "Result" : {
+    "caregivers" : [ {
+      "email" : "caregiver9@mail.com",
+      "firstName" : "Lena",
+      "lastName" : "Morales",
+      "phoneNumber" : "",
+      "type" : "Informal",
+      "username" : "morales"
+    }, {
+      "email" : "caregiver8@mail.com",
+      "firstName" : "Jay",
+      "lastName" : "Sherman",
+      "phoneNumber" : "",
+      "type" : "Informal",
+      "username" : "sherman"
+    } ]
+  },
+  "ResultCode" : 103.0,
+  "ResultDescription" : "getConnectedCaregivers returned information"
+}

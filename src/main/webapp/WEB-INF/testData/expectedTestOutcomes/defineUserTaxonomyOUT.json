@@ -1,0 +1,20 @@
+{
+  "recommendedTools" : [ {
+    "similarityValue" : "0.75",
+    "toolCategory" : "TravelSupport",
+    "tools" : [ "Car driving ability assessment and enhancement", "Public transport support", "Trip planning and routing support" ]
+  }, {
+    "similarityValue" : "1",
+    "toolCategory" : "SocialisationAndCommunicationSupport",
+    "tools" : [ "Multilingual and multiculture support", "Socialisation and communication support" ]
+  }, {
+    "similarityValue" : "1",
+    "toolCategory" : "IndependentLivingSupport",
+    "tools" : [ "Activity monitoring and coaching", "Daily function assistant", "Fall detection and behavioural monitoring module", "Guardian angel", "Language Behavioural Prediction Test", "Leisure support", "Mental training", "Physical activity monitoring", "eDoorman" ]
+  }, {
+    "similarityValue" : "1",
+    "toolCategory" : "CarersSupport",
+    "tools" : [ "Care giver scheduling and reminding", "Care giving monitoring and supervision", "Patient management and complaints monitoring", "Teleconsulation", "Virtual gaming" ]
+  } ],
+  "userTaxonomy" : "Dependent"
+}

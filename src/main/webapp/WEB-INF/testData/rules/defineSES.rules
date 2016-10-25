@@ -1,0 +1,40 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix u: <http://www.AccessibleOntology.com/GenericOntology.owl#>
+@prefix p: <http://inlife.ServiceOntology#>
+
+
+//low SES
+[rule1:
+
+(?if rdf:type p:InferredConfiguration)
+(?if p:userName ?userEmail)
+(?subProfile rdf:type u:AssistedPersonSubProfile)
+(?subProfile u:hasEmail ?email)
+ equal(?userEmail, ?email)
+ 
+(?subProfile u:hasEducation "Low")
+(?subProfile u:hasIncome "Low")
+(?subProfile u:hasSocialSupportNetworks "false")
+->
+  (?subProfile u:hasSocioEconomicStatus "Low")
+  print('**************** SES defined ***************')
+ ]
+ 
+ 
+//low SES
+[rule1:
+
+(?if rdf:type p:InferredConfiguration)
+(?if p:userName ?userEmail)
+(?subProfile rdf:type u:AssistedPersonSubProfile)
+(?subProfile u:hasEmail ?email)
+ equal(?userEmail, ?email)
+ 
+(?subProfile u:hasEducation "Low")
+(?subProfile u:hasIncome "Low")
+(?subProfile u:hasSocialSupportNetworks "false")
+->
+  (?subProfile u:hasSocioEconomicStatus "Low")
+  print('**************** SES defined ***************')
+ ]
+  

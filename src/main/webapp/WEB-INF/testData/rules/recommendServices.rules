@@ -1,0 +1,397 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix u: <http://www.AccessibleOntology.com/GenericOntology.owl#>
+@prefix p: <http://inlife.ServiceOntology#>
+@prefix c: <http://www.w3.org/2002/07/owl#>
+
+[role_definition:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:hasRole ?role)
+  
+  makeSkolem(?newConfig,?userTaxonomySetting, ?if)
+  makeSkolem(?userTaxonomySetting,?role)
+->
+  print('**************** Role defined ***************')
+ 
+  (?if p:refersTo ?newConfig)
+  (?newConfig rdf:type p:Configuration)
+  (?newConfig p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?role)
+  
+  ]
+
+  
+ [assignCategoryToCaregiver:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Provider")
+  
+   (?userTaxonomySetting p:refersToCategory ?category)
+   (?category p:similarityValue ?simValue)
+   equal(?simValue,"0")
+   (?category p:hasName ?name)
+  
+->
+  print('****************Category reference found***************')
+   drop(7)
+  (?category p:similarityValue "1")
+]
+
+
+[assignCategoryToCaregiver:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Caregiver")
+  
+   (?userTaxonomySetting p:refersToCategory ?category)
+   (?category p:similarityValue ?simValue)
+   equal(?simValue,"0")
+   (?category p:hasName "CarersSupport")
+   
+   (?userTaxonomySetting p:refersToCategory ?category4)
+   (?category4 p:similarityValue ?simValue4)
+   equal(?simValue4,"0")
+   (?category4 p:hasName "TravelSupport")
+  
+->
+  print('****************Category reference found***************')
+   drop(7,11)
+  (?category p:similarityValue "1")
+  (?category4 p:similarityValue "1")
+]
+  
+//create reference for all tool categories
+
+[ruleForCreatingAllReferences:
+ 
+  (?b rdfs:subClassOf "Tool")
+  (?b rdfs:comment ?bName)
+  
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?name)
+   makeSkolem(?category, ?userTaxonomySetting, ?bName)
+ 
+->
+  (?userTaxonomySetting p:refersToCategory ?category) 
+  (?category p:hasName ?bName)
+  (?category p:similarityValue "0")
+  (?category p:hasType p:categorySetting)
+]
+
+//create reference to tool categories according to the user taxonomy
+[rule1:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Assisted")
+  
+  (?userTaxonomySetting p:refersToCategory ?category1)
+   (?category1 p:similarityValue ?simValue)
+   equal(?simValue,"0")
+   (?category1 p:hasName "IndependentLivingSupport")
+   
+   (?userTaxonomySetting p:refersToCategory ?category2)
+   (?category2 p:similarityValue ?simValue2)
+   equal(?simValue2,"0")
+   (?category2 p:hasName "CarersSupport")
+
+   (?userTaxonomySetting p:refersToCategory ?category3)
+   (?category3 p:similarityValue ?simValue3)
+   equal(?simValue3,"0")
+   (?category3 p:hasName "SocialisationAndCommunicationSupport")
+   
+   (?userTaxonomySetting p:refersToCategory ?category4)
+   (?category4 p:similarityValue ?simValue4)
+   equal(?simValue4,"0")
+   (?category4 p:hasName "TravelSupport")
+  
+->
+  print('****************Category reference found***************')
+   drop(7,11,15,19)
+  (?category1 p:similarityValue "1")
+  (?category2 p:similarityValue "1")
+  (?category3 p:similarityValue "1")
+  (?category4 p:similarityValue "1")
+   
+]
+
+[rule2:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Dependent")
+  
+   (?userTaxonomySetting p:refersToCategory ?category1)
+   (?category1 p:similarityValue ?simValue)
+   equal(?simValue,"0")
+   (?category1 p:hasName "IndependentLivingSupport")
+   
+   (?userTaxonomySetting p:refersToCategory ?category2)
+   (?category2 p:similarityValue ?simValue2)
+   equal(?simValue2,"0")
+   (?category2 p:hasName "CarersSupport")
+
+   (?userTaxonomySetting p:refersToCategory ?category3)
+   (?category3 p:similarityValue ?simValue3)
+   equal(?simValue3,"0")
+   (?category3 p:hasName "SocialisationAndCommunicationSupport")
+  
+->
+  print('****************Category reference found***************')
+  drop(7,11,15)
+  (?category1 p:similarityValue "1")
+  (?category2 p:similarityValue "1")
+  (?category3 p:similarityValue "1")
+]
+
+[rule3:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "At risk")
+  
+   (?userTaxonomySetting p:refersToCategory ?category1)
+   (?category1 p:similarityValue ?simValue)
+   equal(?simValue,"0")
+   (?category1 p:hasName "IndependentLivingSupport")
+   
+   (?userTaxonomySetting p:refersToCategory ?category2)
+   (?category2 p:similarityValue ?simValue2)
+   equal(?simValue2,"0")
+   (?category2 p:hasName "CarersSupport")
+  
+->
+  print('****************Category reference found***************')
+  drop(7,11)
+  (?category1 p:similarityValue "1")
+  (?category2 p:similarityValue "1")
+ 
+]
+
+[rule4:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Active")
+  
+   (?userTaxonomySetting p:refersToCategory ?category1)
+   (?category1 p:similarityValue ?simValue)
+   equal(?simValue,"0")
+   (?category1 p:hasName "IndependentLivingSupport")
+   
+   (?userTaxonomySetting p:refersToCategory ?category2)
+   (?category2 p:similarityValue ?simValue2)
+   equal(?simValue2,"0")
+   (?category2 p:hasName "TravelSupport")
+
+   (?userTaxonomySetting p:refersToCategory ?category3)
+   (?category3 p:similarityValue ?simValue3)
+   equal(?simValue3,"0")
+   (?category3 p:hasName "SocialisationAndCommunicationSupport")
+  
+->
+ // print('****************Category reference found***************')
+  drop(7,11,15)
+  (?category1 p:similarityValue "1")
+  (?category2 p:similarityValue "1")
+  (?category3 p:similarityValue "1")
+ 
+]
+
+//rule that assigns similarity metric to the categories of services,
+//according to the categories that are proposed for the taxonomy
+[ruleForAssigningSimilarityMetric_siblingClass:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?name)
+  (?userTaxonomySetting p:refersToCategory ?category1)
+  (?category1 p:similarityValue ?value)
+   notEqual(?value, "1")
+   equal(?value, "0")
+->
+  drop(7)
+ (?category1 p:similarityValue "0.75")
+  print('**** Sibling class  0.75 ****')
+]
+
+//rule that assigns similarity metric to the categories of services,
+//according to the categories that are proposed for the taxonomy
+[ruleForAssigningSimilarityMetric_parentClass:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?name)
+  equal(?name, "Provider")
+  (?userTaxonomySetting p:refersToCategory ?category)
+  (?category p:similarityValue ?value)
+  (?category p:hasName ?categoryName)
+  equal(?value, "0.75")
+  equal(?categoryName,"Tool")
+  
+->
+  drop(8)
+ (?category p:similarityValue "1")
+  print('**** Parent class  1 ****'+ ?categoryName)
+]
+
+[ruleForAssigningSimilarityMetric_parentClass_tester:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?name)
+  notEqual(?name, "Provider")
+  (?userTaxonomySetting p:refersToCategory ?category)
+  (?category p:similarityValue ?value)
+  (?category p:hasName ?categoryName)
+  equal(?value, "0.75")
+  equal(?categoryName,"Tool")
+  
+->
+  drop(8)
+ (?category p:similarityValue "0.50")
+  print('**** Parent class  0.50 ****'+ ?categoryName)
+]
+
+
+
+//rule that removes double similarity values
+[ruleForAssigningSimilarityMetric_removeDoubleValues:
+
+  (?if rdf:type p:InferredConfiguration)
+  (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?name)
+  (?userTaxonomySetting p:refersToCategory ?category)
+  (?category p:similarityValue ?valueA)
+  (?category p:hasName ?categoryName)
+  equal(?valueA, "0.75")
+  (?category p:similarityValue ?valueB)
+   equal(?valueB, "1")
+  
+->
+  drop(7)
+]
+
+// recommend tools
+[Recommend_IndependentLiving:
+
+   (?if rdf:type p:InferredConfiguration)
+   (?if p:refersTo ?config)
+  (?config rdf:type p:Configuration)
+  (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name ?name)
+  (?userTaxonomySetting p:refersToCategory ?category1) 
+  (?category1 p:hasName "IndependentLivingSupport")
+  (?category1 p:hasType p:categorySetting)
+   (?tool rdf:type p:IndependentLivingSupport)
+   (?tool p:toolHasName ?toolName)   
+
+->
+  print('****************TAXONOMY matching found***************')
+  (?category1 p:hasTool ?toolName)
+  
+]
+
+[Recommend_CarerSupport:
+
+   (?if rdf:type p:InferredConfiguration)
+   (?if p:refersTo ?config)
+   (?config rdf:type p:Configuration)
+   (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+   (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+   (?userTaxonomySetting p:name ?name)
+   (?userTaxonomySetting p:refersToCategory ?category1) 
+   (?category1 p:hasName "CarersSupport")
+   (?category1 p:hasType p:categorySetting)
+   (?tool rdf:type p:CarersSupport)
+   (?tool p:toolHasName ?toolName)
+
+->
+  print('****************TAXONOMY matching found***************')
+  
+ (?category1 p:hasTool ?toolName)
+
+]
+
+[Recommend_SocialisationAndCommunication:
+
+  (?if rdf:type p:InferredConfiguration)
+   (?if p:refersTo ?config)
+   (?config rdf:type p:Configuration)
+   (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+   (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+   (?userTaxonomySetting p:name ?name)
+   (?userTaxonomySetting p:refersToCategory ?category1) 
+   (?category1 p:hasName "SocialisationAndCommunicationSupport")
+   (?category1 p:hasType p:categorySetting)
+   (?tool rdf:type p:SocialisationAndCommunicationSupport)
+   (?tool p:toolHasName ?toolName)
+
+->
+  print('****************TAXONOMY matching found***************')
+  
+ (?category1 p:hasTool ?toolName)
+
+]
+
+
+[Recommend_TravelSupport:
+
+   (?if rdf:type p:InferredConfiguration)
+   (?if p:refersTo ?config)
+   (?config rdf:type p:Configuration)
+   (?config p:refersToUserTaxonomy ?userTaxonomySetting)
+   (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+   (?userTaxonomySetting p:name ?name)
+   (?userTaxonomySetting p:refersToCategory ?category1) 
+   (?category1 p:hasName "TravelSupport")
+   (?category1 p:hasType p:categorySetting)
+   (?tool rdf:type p:TravelSupport)
+   (?tool p:toolHasName ?toolName)
+
+->
+  print('****************TAXONOMY matching found***************')
+  
+ (?category1 p:hasTool ?toolName)
+
+]
+

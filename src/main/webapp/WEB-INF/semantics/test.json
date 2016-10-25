@@ -1,0 +1,303 @@
+{
+  "assistedPeople": [
+    {
+      "profile": {
+        "uri": "",
+        "hasFirstName": "Maria",
+        "hasLastName": "Garcia",
+        "hasUsername": "",
+        "hasPassword": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+        "hasEmail": "garcia@mail.com",
+        "hasCapacityToFunction": "Low",
+        "hasPhoneNumber": "1234",
+        "hasSocioEconomicStatus": "Low",
+        "hasLocation": "",
+        "hasEducation": "uri of education",
+        "hasGender": "",
+        "hasIMEI": "",
+        "hasSocialSupportNetworks": true,
+        "hasAnnualIncome": "",
+        "hasBirthDate": "",
+        "hasInsertDate": "",
+        "hasUpdateDate": "",
+        "hasTechnologyUsage": "",
+        "hasMaritalStatus": "uri of marital status",
+        "hasJob": "",
+        "hasStatus": "",
+        "User_has_Disability": [
+          "uri of disability 1",
+          "uri of disability 2"
+        ],
+        "User_linksTo_Impairment": [
+          "uri of impairment 1",
+          "uri of impairment 2"
+        ],
+        "User_linksTo_FunctionalLimitation": [
+          "uri of functional limitation 1",
+          "uri of uri of functional limitation 2"
+        ],
+        "User_linksTo_Disease": [
+          "uri of disease 1",
+          "uri of disease 2"
+        ]
+      },
+      "connections": {
+        "approvedConnected": [
+          "uri of user"
+        ],
+        "askedConnected": [
+          "uri of user"
+        ],
+        "pendingConnected": [
+          "uri of user"
+        ]
+      }
+    }
+  ],
+  "providers": [
+    {
+      "profile": {
+        "uri": "",
+        "hasFirstName": "",
+        "hasLastName": "",
+        "hasUsername": "",
+        "hasPassword": "",
+        "hasEmail": "",
+        "hasLocation": "",
+        "hasDescription": "",
+        "hasInsertDate": "",
+        "hasUpdateDate": "",
+        "hasBirthDate": "",
+        "hasPhoneNumber": ""
+      }
+    }
+  ],
+  "caregivers": [
+    {
+      "profile": {
+        "uri": "",
+        "hasFirstName": "",
+        "hasLastName": "",
+        "hasUsername": "",
+        "hasPassword": "",
+        "hasEmail": "",
+        "hasLocation": "",
+        "hasDescription": "",
+        "hasInsertDate": "",
+        "hasUpdateDate": "",
+        "hasBirthDate": "",
+        "hasPhoneNumber": ""
+      },
+      "connections": {
+        "approvedConnected": [
+          "uri of user"
+        ],
+        "askedConnected": [
+          "uri of user"
+        ],
+        "pendingConnected": [
+          "uri of user"
+        ]
+      }
+    }
+  ],
+  "disabilities": [
+    {
+      "uri": "",
+      "hasName": "",
+      "hasCode": "",
+      "Disability_belongsTo_Impairment": [
+        "uri of impairment"
+      ]
+    }
+  ],
+  "impairments": [
+    {
+      "uri": "",
+      "hasName": "",
+      "hasCode": "",
+      "Impairment_linksTo_FunctionalLimitation": [
+        "uri of functional limitation"
+      ]
+    }
+  ],
+  "functionalLimitations": [
+    {
+      "uri": "",
+      "hasName": "",
+      "hasCode": "",
+      "FunctionalLimitation_belongsTo_Disability": [
+        "uri of disability"
+      ]
+    }
+  ],
+  "diseases": [
+    {
+      "uri": "",
+      "hasCode": "",
+      "hasName": ""
+    }
+  ],
+  "education": [
+    {
+      "uri": "",
+      "hasName": "",
+      "hasValue": ""
+    }
+  ],
+  "maritalStatuses": [
+    {
+      "uri": "",
+      "hasName": ""
+    }
+  ],
+  "allTools": [
+    {
+      "toolCategory": "TravelSupport",
+      "tools": [
+        {
+          "toolHasName": "",
+          "toolHasUsername": "",
+          "toolHasPassword": "",
+          "toolHasDescription": "",
+          "hasImageURL": "",
+          "toolHasId": "",
+          "toolHasUrl": "",
+          "toolBelongsToVendor": [
+            "uri of vendor"
+          ],
+          "toolHasService": [
+            "uri of service model 1",
+            "uri of service model 2"
+          ]
+        }
+      ]
+    }
+  ],
+  "connectionDetails": [
+    {
+      "uri": "",
+      "hasURL": "",
+      "hasPort": "",
+      "hasHost": ""
+    }
+  ],
+  "serviceModels": [
+    {
+      "uri": "",
+      "serviceHasName": "",
+      "serviceHasDescription": "",
+      "hasPriority": 0,
+      "canBeUsedIndependently": false,
+      "serviceShowStats": false,
+      "hasConnectionDetails": "",
+      "hasInput": [
+        "uri of input parameter"
+      ],
+      "hasOutput": [
+        "uri of output parameter"
+      ],
+      "hasResult": [
+        
+      ],
+      "hasPreconditions": [
+        
+      ]
+    }
+  ],
+  "parameters": [
+    {
+      "uri": "",
+      "parameterHasName": "",
+      "parameterHasDescription": "",
+      "parameterHasRange": "",
+      "parameterHasDefaultValue": "",
+      "parameterHasMaxValue": "",
+      "parameterHasMinValue": "",
+      "parameterHasType": "",
+      "isMappedToParameterTerm": "uri of parameter term"
+    }
+  ],
+  "parameterTerms": [
+    {
+      "uri": "",
+      "hasName": "",
+      "hasType": ""
+    }
+  ],
+  "status": [
+    {
+      "uri": "",
+      "hasID": "",
+      "statusIsMappedWith": [
+        "uri of activity"
+      ],
+      "statusIsMappedToMessage": [
+        "uri of message"
+      ]
+    }
+  ],
+  "userActivities": [
+    {
+      "uri": "",
+      "activityIsMappedWith": [
+        "uri of service model"
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "uri": "",
+      "hasName": ""
+    }
+  ],
+  "usage": [
+    {
+      "uri": "",
+      "hasEventDate": "",
+      "hasUserId": "",
+      "hasServiceName": ""
+    }
+  ],
+  "answers": [
+    {
+      "uri": "",
+      "hasName": "",
+      "hasValue": 0
+    }
+  ],
+  "login": [
+    {
+      "uri": "",
+      "hasEventDate": "",
+      "hasUserId": ""
+    }
+  ],
+  "questions": [
+    {
+      "uri": "",
+      "hasLabel": "",
+      "hasName": "",
+      "hasPossibleAnswers": [
+        "uri of answer"
+      ]
+    }
+  ],
+  "questionnaire": [
+    {
+      "uri": "",
+      "hasEventDate": "",
+      "hasUserId": "",
+      "hasUserAnswer": [
+        "uri of user answers"
+      ]
+    }
+  ],
+  "userAnswers": [
+    {
+      "uri": "",
+      "hasAnswer": "uri of answer",
+      "hasQuestion": "uri of question"
+    }
+  ]
+}

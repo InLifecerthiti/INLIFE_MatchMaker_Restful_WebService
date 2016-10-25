@@ -1,0 +1,36 @@
+# Querry all services and settings to contextualized preferences 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX p: <http://inlife.ServiceOntology#>
+
+SELECT DISTINCT
+	?type
+	(str(?c) as ?configId)
+	(str(?act) as ?active)
+    (str(?service_name) as ?serviceName)	
+	(str(?input_name) as ?propName)
+	(str(?value) as ?propValue)
+	(str(?fromServ) as ?fromServiceName)
+	(str(?fromVar) as ?fromVariableName)
+	(str(?toServ) as ?toServiceName)
+	(str(?toVar) as ?toVariableName)
+	
+	
+WHERE
+{
+	?if rdf:type p:InferredConfiguration.
+	?config rdf:type p:Configuration.
+	?config p:hasService ?serviceSetting.
+	?serviceSetting rdf:type ?type.
+	?serviceSetting p:isActive ?act.
+	?serviceSetting p:hasName ?service_name.
+	?serviceSetting p:serviceInput ?input.
+	?input p:name ?input_name.
+	?input p:hasValue ?value.
+	OPTIONAL{?serviceSetting p:hasMetadata ?metadata}.
+	OPTIONAL{?metadata p:fromServiceName ?fromServ}.
+	OPTIONAL{?metadata p:fromVariableName ?fromVar}.
+	OPTIONAL{?metadata p:toServiceName ?toServ}.
+	OPTIONAL{?metadata p:toVariableName ?toVar}.
+	
+} ORDER BY DESC(?service_name)

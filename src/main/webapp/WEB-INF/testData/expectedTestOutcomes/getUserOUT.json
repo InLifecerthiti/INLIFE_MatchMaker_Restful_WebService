@@ -1,0 +1,18 @@
+{
+  "Result" : {
+    "birthDate" : "1938-05-04T00:00:00",
+    "disabilities" : [ "Alzheimer disease", "Academic skills disorders" ],
+    "diseases" : [ ],
+    "email" : "garcia@mail.com",
+    "firstName" : "Maria",
+    "functionalLimitations" : [ "Auditory perception", "Abstraction", "Articulation functions" ],
+    "impairments" : [ "Cognitive Impairment" ],
+    "lastName" : "Garcia",
+    "location" : "Lasarte, Spain",
+    "phoneNumber" : "306977204892",
+    "status" : "Dependent",
+    "username" : "garcia"
+  },
+  "ResultCode" : 102.0,
+  "ResultDescription" : "getUser returned information"
+}

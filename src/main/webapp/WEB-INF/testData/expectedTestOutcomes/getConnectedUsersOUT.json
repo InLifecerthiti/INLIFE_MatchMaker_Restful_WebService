@@ -1,0 +1,46 @@
+{
+  "Result" : {
+    "connectedUsers" : [ {
+      "birthDate" : "2016-10-19T12:43:19",
+      "disabilities" : [ "Blurred vision " ],
+      "diseases" : [ ],
+      "email" : "lucas@mail.com",
+      "firstName" : "Lucas",
+      "functionalLimitations" : [ "Light sensitivity" ],
+      "impairments" : [ "Cognitive Impairment" ],
+      "lastName" : "Bjornson",
+      "location" : "Gothenborg, Sweden",
+      "phoneNumber" : "306977204891",
+      "status" : "Assisted",
+      "username" : "lucas"
+    }, {
+      "birthDate" : "1938-05-04T00:00:00",
+      "disabilities" : [ "Alzheimer disease", "Academic skills disorders" ],
+      "diseases" : [ ],
+      "email" : "garcia@mail.com",
+      "firstName" : "Maria",
+      "functionalLimitations" : [ "Auditory perception", "Abstraction", "Articulation functions" ],
+      "impairments" : [ "Cognitive Impairment" ],
+      "lastName" : "Garcia",
+      "location" : "Lasarte, Spain",
+      "phoneNumber" : "306977204892",
+      "status" : "Dependent",
+      "username" : "garcia"
+    }, {
+      "birthDate" : "2016-10-19T12:43:19",
+      "disabilities" : [ "Colour Blindness", "Learning disability ", "Communication disability" ],
+      "diseases" : [ ],
+      "email" : "elderly3@mail.com",
+      "firstName" : "Nitesh",
+      "functionalLimitations" : [ ],
+      "impairments" : [ ],
+      "lastName" : "Sarin",
+      "location" : "Pocklington, UK",
+      "phoneNumber" : "",
+      "status" : "",
+      "username" : "elderly_3"
+    } ]
+  },
+  "ResultCode" : 104.0,
+  "ResultDescription" : "getConnectedUsers returned information"
+}

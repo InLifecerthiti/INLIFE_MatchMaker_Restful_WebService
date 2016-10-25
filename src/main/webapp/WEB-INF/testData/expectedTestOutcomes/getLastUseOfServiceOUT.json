@@ -1,0 +1,8 @@
+{
+  "Result" : {
+    "lastDateOfUse" : "2016-08-30T17:14:48",
+    "serviceName" : "Get user location"
+  },
+  "ResultCode" : 202.0,
+  "ResultDescription" : "getLastUseOfService returned information"
+}

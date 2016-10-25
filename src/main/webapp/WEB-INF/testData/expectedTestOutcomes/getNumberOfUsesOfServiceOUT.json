@@ -1,0 +1,8 @@
+{
+  "Result" : {
+    "numberOfUses" : 1.0,
+    "serviceName" : "Get user location"
+  },
+  "ResultCode" : 203.0,
+  "ResultDescription" : "getNumberOfUsesOfService returned information"
+}

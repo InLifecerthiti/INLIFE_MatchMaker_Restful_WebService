@@ -1,0 +1,100 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix u: <http://www.AccessibleOntology.com/GenericOntology.owl#>
+@prefix p: <http://inlife.ServiceOntology#>
+
+[rule1:
+
+(?if rdf:type p:InferredConfiguration)
+(?if p:userName ?userEmail)
+(?subProfile rdf:type u:AssistedPersonSubProfile)
+(?subProfile u:hasUsername ?email)
+equal(?userEmail, ?email)
+(?subProfile u:hasCapacityToFunction "Low")
+(?subProfile u:hasSocioEconomicStatus "Low")
+//(?Dependent rdf:type u:UserTaxonomy)
+//(?Dependent u:hasName "Dependent")
+
+ makeSkolem(?newConfig,?userTaxonomySetting, ?if)
+ makeSkolem(?userTaxonomySetting,?Dependent)
+->
+  print('**************** USER TAXONOMY defined ***************')
+ 
+  (?if p:refersTo ?newConfig)
+  (?newConfig rdf:type p:Configuration)
+  (?newConfig p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Dependent")]
+  
+  
+[rule2:
+
+(?if rdf:type p:InferredConfiguration)
+(?if p:userName ?userEmail)
+(?subProfile rdf:type u:AssistedPersonSubProfile)
+(?subProfile u:hasUsername ?email)
+equal(?userEmail, ?email)
+(?subProfile u:hasCapacityToFunction "Low")
+(?subProfile u:hasSocioEconomicStatus "High")
+//(?Assisted rdf:type u:UserTaxonomy)
+//(?Assisted u:hasName "Assisted")
+
+ makeSkolem(?newConfig,?userTaxonomySetting, ?if)
+ makeSkolem(?userTaxonomySetting,?Assisted)
+->
+  print('**************** USER TAXONOMY defined ***************')
+ 
+  (?if p:refersTo ?newConfig)
+  (?newConfig rdf:type p:Configuration)
+  (?newConfig p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Assisted")]
+  
+  
+[rule3:
+
+(?if rdf:type p:InferredConfiguration)
+(?if p:userName ?userEmail)
+(?subProfile rdf:type u:AssistedPersonSubProfile)
+(?subProfile u:hasUsername ?email)
+equal(?userEmail, ?email)
+(?subProfile u:hasCapacityToFunction "High")
+(?subProfile u:hasSocioEconomicStatus "Low")
+//(?Atrisk rdf:type u:UserTaxonomy)
+//(?Atrisk u:hasName "At risk")
+
+ makeSkolem(?newConfig,?userTaxonomySetting, ?if)
+ makeSkolem(?userTaxonomySetting,?Atrisk)
+->
+  print('**************** USER TAXONOMY defined ***************')
+ 
+  (?if p:refersTo ?newConfig)
+  (?newConfig rdf:type p:Configuration)
+  (?newConfig p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "At risk")]
+
+
+[rule4:
+
+(?if rdf:type p:InferredConfiguration)
+(?if p:userName ?userEmail)
+(?subProfile rdf:type u:AssistedPersonSubProfile)
+(?subProfile u:hasUsername ?email)
+equal(?userEmail, ?email)
+(?subProfile u:hasCapacityToFunction "High")
+(?subProfile u:hasSocioEconomicStatus "High")
+//(?Active rdf:type u:UserTaxonomy)
+//(?Active u:hasName "Active")
+
+ makeSkolem(?newConfig,?userTaxonomySetting, ?if)
+ makeSkolem(?userTaxonomySetting,?Active)
+->
+  print('**************** USER TAXONOMY defined ***************')
+ 
+  (?if p:refersTo ?newConfig)
+  (?newConfig rdf:type p:Configuration)
+  (?newConfig p:refersToUserTaxonomy ?userTaxonomySetting)
+  (?userTaxonomySetting rdf:type p:userTaxonomySetting)
+  (?userTaxonomySetting p:name "Active")]
+
+

@@ -15,11 +15,12 @@ public class Profile {
 	private Date hasUpdateDate;
 	private String hasPhoneNumber;
 	private Date hasBirthDate;
+	private String hasLanguage;
 
 	public Profile(String uri, String hasFirstName, String hasLastName,
 			String hasUsername, String hasPassword, String hasEmail,
 			String hasLocation, Date hasInsertDate, Date hasUpdateDate,
-			String hasPhoneNumber, Date hasBirthDate) {
+			String hasPhoneNumber, Date hasBirthDate,String hasLanguage) {
 		super();
 		this.uri = uri;
 		this.hasFirstName = hasFirstName;
@@ -32,6 +33,16 @@ public class Profile {
 		this.hasUpdateDate = hasUpdateDate;
 		this.hasPhoneNumber = hasPhoneNumber;
 		this.hasBirthDate = hasBirthDate;
+		this.hasLanguage = hasLanguage;
+	}
+	
+
+	public String getHasLanguage() {
+		return hasLanguage;
+	}
+
+	public void setHasLanguage(String hasLanguage) {
+		this.hasLanguage = hasLanguage;
 	}
 
 	public String getHasPhoneNumber() {
@@ -122,6 +133,7 @@ public class Profile {
 		this.hasUpdateDate = hasUpdateDate;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Profile [uri=" + uri + ", hasFirstName=" + hasFirstName
@@ -130,17 +142,41 @@ public class Profile {
 				+ hasEmail + ", hasLocation=" + hasLocation
 				+ ", hasInsertDate=" + hasInsertDate + ", hasUpdateDate="
 				+ hasUpdateDate + ", hasPhoneNumber=" + hasPhoneNumber
-				+ ", hasBirthDate=" + hasBirthDate + "]";
+				+ ", hasBirthDate=" + hasBirthDate + ", hasLanguage="
+				+ hasLanguage + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		
+		result = prime * result
+				+ ((hasBirthDate == null) ? 0 : hasBirthDate.hashCode());
+		result = prime * result
+				+ ((hasEmail == null) ? 0 : hasEmail.hashCode());
+		result = prime * result
+				+ ((hasFirstName == null) ? 0 : hasFirstName.hashCode());
+		result = prime * result
+				+ ((hasInsertDate == null) ? 0 : hasInsertDate.hashCode());
+		result = prime * result
+				+ ((hasLanguage == null) ? 0 : hasLanguage.hashCode());
+		result = prime * result
+				+ ((hasLastName == null) ? 0 : hasLastName.hashCode());
+		result = prime * result
+				+ ((hasLocation == null) ? 0 : hasLocation.hashCode());
+		result = prime * result
+				+ ((hasPassword == null) ? 0 : hasPassword.hashCode());
+		result = prime * result
+				+ ((hasPhoneNumber == null) ? 0 : hasPhoneNumber.hashCode());
+		result = prime * result
+				+ ((hasUpdateDate == null) ? 0 : hasUpdateDate.hashCode());
+		result = prime * result
+				+ ((hasUsername == null) ? 0 : hasUsername.hashCode());
 		result = prime * result + ((uri == null) ? 0 : uri.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -170,6 +206,11 @@ public class Profile {
 			if (other.hasInsertDate != null)
 				return false;
 		} else if (!hasInsertDate.equals(other.hasInsertDate))
+			return false;
+		if (hasLanguage == null) {
+			if (other.hasLanguage != null)
+				return false;
+		} else if (!hasLanguage.equals(other.hasLanguage))
 			return false;
 		if (hasLastName == null) {
 			if (other.hasLastName != null)
@@ -209,4 +250,5 @@ public class Profile {
 		return true;
 	}
 
+	
 }

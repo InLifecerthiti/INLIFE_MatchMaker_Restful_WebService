@@ -1583,11 +1583,11 @@ public class TransformerManager {
 				}
 
 				toolsPerCategory.put(toolObject);
-				
+
 			}
 			outGraph.put(toolsPerCategory);
 			// categoryObject.put("tools", tempToolsArray);
-			
+
 			outGraph.put(categoryObject);
 		}
 
@@ -2214,6 +2214,9 @@ public class TransformerManager {
 		if (profile.getHasLastName() != null)
 			userObj.put("u:hasLastName", profile.getHasLastName().toString());
 
+		if (profile.getHasLanguage() != null)
+			userObj.put("u:hasLanguage", profile.getHasLanguage().toString());
+
 		return userObj;
 	}
 
@@ -2551,8 +2554,7 @@ public class TransformerManager {
 											.getJSONObject("serviceInput");
 								}
 
-								serviceInput.put(propName,
-										propValue);
+								serviceInput.put(propName, propValue);
 
 							}
 

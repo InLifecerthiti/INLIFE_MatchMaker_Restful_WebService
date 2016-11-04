@@ -6,10 +6,12 @@
     "email" : "garcia@mail.com",
     "firstName" : "Maria",
     "functionalLimitations" : [ "Auditory perception", "Abstraction", "Articulation functions" ],
+    "gender" : "female",
     "impairments" : [ "Cognitive Impairment" ],
     "lastName" : "Garcia",
     "location" : "Lasarte, Spain",
     "phoneNumber" : "306977204892",
+    "preferredLanguage" : "ab",
     "status" : "Dependent",
     "username" : "garcia"
   },

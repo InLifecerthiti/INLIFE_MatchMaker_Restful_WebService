@@ -1,7 +1,7 @@
 {
   "servicesToCall" : {
     "serviceInput" : {
-      "imei" : "1234"
+      "imei" : "355210060076748"
     },
     "serviceName" : "Get user location"
   }

@@ -552,6 +552,14 @@ public class JsonManager {
 				else
 					returnedObject.put("Result", false);
 
+				// after creating user send the data to the IN LIFE APP CENTRE
+
+				// 1. create the object
+				String userToSend = createJsonOfNewUsers();
+
+				// 2. post it to the IN LIFE APP CENTRE
+				Utils.postNewUsers(userToSend);
+
 			}
 		} else {
 
@@ -570,11 +578,9 @@ public class JsonManager {
 		// format json to return and add response code
 
 		returnedObject = OntologyManager.addResultCodeToJSON(returnedObject);
-		
-		Utils.writeFile(
-				MatchmakerManager.rbmmJsonOutputFilepath,
-				Utils.jsonPrettyPrint(returnedObject.toString(5)));
 
+		Utils.writeFile(MatchmakerManager.rbmmJsonOutputFilepath,
+				Utils.jsonPrettyPrint(returnedObject.toString(5)));
 
 		return returnedObject.toString(5);
 	}
@@ -623,8 +629,7 @@ public class JsonManager {
 			}
 
 		}
-		
-	
+
 		return result;
 	}
 
@@ -818,7 +823,7 @@ public class JsonManager {
 		Date date = Calendar.getInstance().getTime();
 
 		Profile profile = new Profile(uri, "", "", username, password, "", "",
-				date, null, "", null);
+				date, null, "", null, "");
 		Connections connections = new Connections(new ArrayList<String>(),
 				new ArrayList<String>(), new ArrayList<String>());
 		Caregiver carer = new Caregiver(profile, type, connections);
@@ -856,7 +861,7 @@ public class JsonManager {
 		Date date = Calendar.getInstance().getTime();
 
 		Profile profile = new Profile(uri, "", "", username, password, "", "",
-				date, null, "", null);
+				date, null, "", null, "");
 		Connections connections = new Connections(new ArrayList<String>(),
 				new ArrayList<String>(), new ArrayList<String>());
 		AssistedPerson assisted = new AssistedPerson(profile, "", "", "", "",
@@ -1028,28 +1033,35 @@ public class JsonManager {
 
 		AssistedPerson assisted = (AssistedPerson) assistedPeopleHashmap_byUsername
 				.get(username);
+		Caregiver caregiver = (Caregiver) caregiversHashmap_byUsername
+				.get(username);
 		ArrayList<String> disabilitiesList = new ArrayList<String>();
 		ArrayList<String> impairmentsList = new ArrayList<String>();
 		ArrayList<String> functionalLimitationsList = new ArrayList<String>();
-		ArrayList<String> diseasesList = new ArrayList<String>();
+		ArrayList<JSONObject> diseasesList = new ArrayList<JSONObject>();
 		Disability disability = null;
 		FunctionalLimitation functionalLimitation = null;
 		Impairment impairment = null;
 		Disease disease = null;
 
+		// return assisted user
 		if (assisted != null) {
 
 			jsonOutput
 					.put("firstName", assisted.getProfile().getHasFirstName());
 			jsonOutput.put("lastName", assisted.getProfile().getHasLastName());
-			jsonOutput
-					.put("birthDate", Utils.convertDateToSpecificFormat(assisted.getProfile().getHasBirthDate()));
+			jsonOutput.put("birthDate", Utils
+					.convertDateToSpecificFormat(assisted.getProfile()
+							.getHasBirthDate()));
 			jsonOutput.put("username", assisted.getProfile().getHasUsername());
 			jsonOutput.put("email", assisted.getProfile().getHasEmail());
 			jsonOutput.put("location", assisted.getProfile().getHasLocation());
 			jsonOutput.put("phoneNumber", assisted.getProfile()
 					.getHasPhoneNumber());
 			jsonOutput.put("status", assisted.getHasStatus());
+			jsonOutput.put("gender", assisted.getHasGender());
+			jsonOutput.put("preferredLanguage", assisted.getProfile()
+					.getHasLanguage());
 
 			if (assisted.getUser_has_Disability() != null)
 				for (String s : assisted.getUser_has_Disability()) {
@@ -1071,17 +1083,39 @@ public class JsonManager {
 					impairmentsList.add(impairment.getHasName());
 				}
 
-			if (assisted.getUser_linksTo_Disease() != null)
+			if (assisted.getUser_linksTo_Disease() != null) {
+				JSONObject diseaseObj = null;
 				for (String s : assisted.getUser_linksTo_Disease()) {
 					disease = (Disease) this.diseases.get(s);
-					diseasesList.add(disease.getHasName());
+					diseaseObj = new JSONObject();
+					diseaseObj.put("name", disease.getHasName());
+					diseaseObj.put("code", disease.getHasCode());
+					diseasesList.add(diseaseObj);
 				}
+			}
 
 			jsonOutput.put("disabilities", disabilitiesList);
 			jsonOutput.put("functionalLimitations", functionalLimitationsList);
 			jsonOutput.put("impairments", impairmentsList);
 			jsonOutput.put("diseases", diseasesList);
 
+			return jsonOutput;
+
+		} // return caregiver
+		else if (caregiver != null) {
+
+			jsonOutput.put("firstName", caregiver.getProfile()
+					.getHasFirstName());
+			jsonOutput.put("lastName", caregiver.getProfile().getHasLastName());
+			jsonOutput.put("birthDate", Utils
+					.convertDateToSpecificFormat(caregiver.getProfile()
+							.getHasBirthDate()));
+			jsonOutput.put("username", caregiver.getProfile().getHasUsername());
+			jsonOutput.put("email", caregiver.getProfile().getHasEmail());
+			jsonOutput.put("location", caregiver.getProfile().getHasLocation());
+			jsonOutput.put("phoneNumber", caregiver.getProfile()
+					.getHasPhoneNumber());
+			jsonOutput.put("type", caregiver.getType());
 			return jsonOutput;
 
 		}

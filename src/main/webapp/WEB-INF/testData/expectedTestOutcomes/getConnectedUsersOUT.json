@@ -1,16 +1,18 @@
 {
   "Result" : {
     "connectedUsers" : [ {
-      "birthDate" : "2016-10-19T12:43:19",
+      "birthDate" : "2016-11-04T09:28:48",
       "disabilities" : [ "Blurred vision " ],
       "diseases" : [ ],
       "email" : "lucas@mail.com",
       "firstName" : "Lucas",
       "functionalLimitations" : [ "Light sensitivity" ],
+      "gender" : "male",
       "impairments" : [ "Cognitive Impairment" ],
       "lastName" : "Bjornson",
       "location" : "Gothenborg, Sweden",
       "phoneNumber" : "306977204891",
+      "preferredLanguage" : "",
       "status" : "Assisted",
       "username" : "lucas"
     }, {
@@ -20,23 +22,27 @@
       "email" : "garcia@mail.com",
       "firstName" : "Maria",
       "functionalLimitations" : [ "Auditory perception", "Abstraction", "Articulation functions" ],
+      "gender" : "female",
       "impairments" : [ "Cognitive Impairment" ],
       "lastName" : "Garcia",
       "location" : "Lasarte, Spain",
       "phoneNumber" : "306977204892",
+      "preferredLanguage" : "ab",
       "status" : "Dependent",
       "username" : "garcia"
     }, {
-      "birthDate" : "2016-10-19T12:43:19",
+      "birthDate" : "2016-11-04T09:28:48",
       "disabilities" : [ "Colour Blindness", "Learning disability ", "Communication disability" ],
       "diseases" : [ ],
       "email" : "elderly3@mail.com",
       "firstName" : "Nitesh",
       "functionalLimitations" : [ ],
+      "gender" : "not specified",
       "impairments" : [ ],
       "lastName" : "Sarin",
       "location" : "Pocklington, UK",
       "phoneNumber" : "",
+      "preferredLanguage" : "",
       "status" : "",
       "username" : "elderly_3"
     } ]

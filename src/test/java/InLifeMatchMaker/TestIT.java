@@ -281,11 +281,11 @@ public class TestIT extends TestCase {
 				e.printStackTrace();
 			}
 
-//			System.out.println(actualOutputStr);
+			System.out.println(actualOutputStr);
 //
-//			System.out.println("-----------------------------");
+			System.out.println("-----------------------------");
 //
-//			System.out.println(expectedOutputJsonStr1);
+			System.out.println(expectedOutputJsonStr1);
 
 			boolean outputIsSimilarToOneOfTheExpected = false;
 			if (actualOutputStr.equals(expectedOutputJsonStr1))

@@ -33,8 +33,85 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
 
 public class Utils {
+
+	private static final String demoJSON = "{\"assistedPeople\": [{\"profile\": {\"uri\": \"aa\","
+			+ "\"hasUsername\": \"aaa\",\"hasPassword\": \"aaa\",\"hasInsertDate\": \"2011-12-03T10:15:30\""
+			+ "},\"approvedConnected\": [\"uri of user1\"]}],\"caregivers\": [{\"profile\": {"
+			+ "\"uri\": \"bb\",\"hasUsername\": \"bbb\",\"hasPassword\": \"bbb\",\"hasInsertDate\": \"2011-12-03T10:15:30\""
+			+ "},\"type\": \"Formal\",\"approvedConnected\": [\"uri of user2\"]}]}";
+
+	private final static String ADMIN_USERNAME = "test_admin@cloud4all.org"; // test@liferay.com
+	private final static String ADMIN_PASSWORD = "1234";//pawelbrozek
+	private final static String HOSTNAME = "160.40.50.183";//160.40.51.191
+	private final static int PORT = 8080;
+
+	public static void main(String[] args) throws ClientProtocolException,
+			IOException {
+		postNewUsers(demoJSON);
+	}
+
+	public static void postNewUsers(String json)
+			throws ClientProtocolException, IOException {
+
+		HttpHost targetHost = new HttpHost(HOSTNAME, PORT, "http");
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		httpclient.getCredentialsProvider()
+				.setCredentials(
+						new AuthScope(targetHost.getHostName(),
+								targetHost.getPort()),
+						new UsernamePasswordCredentials(ADMIN_USERNAME,
+								ADMIN_PASSWORD));
+
+		// Create AuthCache instance
+		AuthCache authCache = new BasicAuthCache();
+		// Generate BASIC scheme object and add it to the local
+		// auth cache
+		BasicScheme basicAuth = new BasicScheme();
+		authCache.put(targetHost, basicAuth);
+
+		// Add AuthCache to the execution context
+		BasicHttpContext ctx = new BasicHttpContext();
+		ctx.setAttribute(ClientContext.AUTH_CACHE, authCache);
+
+		HttpPost post = new HttpPost(
+				"/In-life-application-center-portlet/api/secure/jsonws/dataontology/add-new-users");
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("serviceClassName",
+				"org.inlife.services.my_services.service.DataOntologyServiceUtil"));
+		params.add(new BasicNameValuePair("serviceMethodName", "addNewUsers"));
+		params.add(new BasicNameValuePair("json", json));
+
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
+		post.setEntity(entity);
+
+		HttpResponse resp = httpclient.execute(targetHost, post, ctx);
+		resp.getEntity().writeTo(System.out);
+		System.out.println("DONE");
+		httpclient.getConnectionManager().shutdown();
+	}
 
 	public static String hashMD5(String s) throws NoSuchAlgorithmException {
 
@@ -169,16 +246,6 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return date;
-	}
-
-	public static void main(String args[]) throws Exception {
-		// System.out.println(encrypt("1234"));
-		Date date = Calendar.getInstance().getTime();
-
-		String s = convertDateToSpecificFormat(date);
-		Date newDate = convertStringToDate(s);
-		System.out.println(newDate);
-		// System.out.println(convertStringToDate("2011-12-03T10:15:30"));
 	}
 
 	public static Response addHTTPCode(String outputJsonStr) {
